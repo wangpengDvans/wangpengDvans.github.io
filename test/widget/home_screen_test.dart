@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:guitu_app/app.dart';
 import 'package:guitu_app/core/di/injection.dart';
 import 'package:guitu_app/domain/models/home_data.dart';
 import 'package:guitu_app/domain/repositories/home_repository.dart';
 import 'package:guitu_app/features/home/cubit/home_cubit.dart';
+import 'package:guitu_app/features/home/screens/home_screen.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHomeRepository extends Mock implements HomeRepository {}
@@ -23,12 +23,21 @@ void main() {
       categories: const [],
       nearbyMerchants: const [],
     );
-    when(() => repository.loadHomeData(city: any(named: 'city'))).thenAnswer((_) async => data);
+    when(() => repository.loadHomeData(city: any(named: 'city'))).thenAnswer(
+      (_) async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        return data;
+      },
+    );
 
     getIt.registerLazySingleton<HomeRepository>(() => repository);
     getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepository>()));
 
-    await tester.pumpWidget(const GuituApp());
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: HomeScreen(),
+      ),
+    );
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
