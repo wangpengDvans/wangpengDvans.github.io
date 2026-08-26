@@ -1,0 +1,55 @@
+name: guitu_app
+description: A Flutter Android app for the 归途 GUITU funeral service platform.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Dependency injection
+  get_it: ^7.7.0
+
+  # Network (for future real API)
+  dio: ^5.7.0
+
+  # JSON
+  json_annotation: ^4.9.0
+
+  # UI utilities
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.10
+  shimmer: ^3.0.0
+  flutter_rating_bar: ^4.0.1
+  carousel_slider: ^5.0.0
+  google_maps_flutter: ^2.9.0
+  panorama: ^0.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.12
+  json_serializable: ^6.8.0
+  mocktail: ^1.0.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/mock/
+    - assets/images/

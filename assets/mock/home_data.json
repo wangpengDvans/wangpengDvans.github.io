@@ -1,0 +1,53 @@
+{
+  "city": "上海",
+  "guideCompletedSteps": 2,
+  "guideTotalSteps": 6,
+  "categories": [
+    {"icon": "local_hospital_outlined", "label": "殡仪服务"},
+    {"icon": "terrain_outlined", "label": "墓地选购"},
+    {"icon": "memory_outlined", "label": "数字纪念"},
+    {"icon": "assignment_outlined", "label": "身后事"},
+    {"icon": "eco_outlined", "label": "生态安葬"},
+    {"icon": "description_outlined", "label": "生前契约"},
+    {"icon": "shopping_bag_outlined", "label": "用品商城"},
+    {"icon": "help_outline", "label": "帮助中心"}
+  ],
+  "nearbyMerchants": [
+    {
+      "id": "m1",
+      "name": "永安殡仪服务",
+      "city": "上海",
+      "distance": 1.2,
+      "rating": 4.9,
+      "reviewCount": 328,
+      "servedCount": 3200,
+      "responseTime": "24h响应",
+      "tags": ["明码标价", "24h响应", "15年老店"],
+      "imageUrl": null
+    },
+    {
+      "id": "m2",
+      "name": "福寿园礼仪服务",
+      "city": "上海",
+      "distance": 3.5,
+      "rating": 4.8,
+      "reviewCount": 215,
+      "servedCount": 1800,
+      "responseTime": "30min响应",
+      "tags": ["品牌连锁", "一条龙", "好评如潮"],
+      "imageUrl": null
+    },
+    {
+      "id": "m3",
+      "name": "静心堂殡葬服务",
+      "city": "上海",
+      "distance": 5.1,
+      "rating": 4.7,
+      "reviewCount": 156,
+      "servedCount": 900,
+      "responseTime": "1h响应",
+      "tags": ["价格透明", "生态葬", "定制服务"],
+      "imageUrl": null
+    }
+  ]
+}

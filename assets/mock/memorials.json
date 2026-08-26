@@ -1,0 +1,60 @@
+{
+  "id": "mem1",
+  "name": "张恩铭",
+  "birthDate": "1948.03.12",
+  "deathDate": "2026.07.16",
+  "age": 78,
+  "photoUrl": null,
+  "epitaph": "一生教书，两袖清风。他把耐心给了三代学生，把沉默留给了自己。",
+  "flowerCount": 128,
+  "candleCount": 96,
+  "messageCount": 3,
+  "shareCount": 12,
+  "timeline": [
+    {
+      "year": "1948",
+      "title": "出生于浙江绍兴",
+      "subtitle": "家中第三子"
+    },
+    {
+      "year": "1970",
+      "title": "毕业于杭州师范大学",
+      "subtitle": "中文系"
+    },
+    {
+      "year": "1972",
+      "title": "任教于绍兴第一中学",
+      "subtitle": "语文教师"
+    },
+    {
+      "year": "1985",
+      "title": "获评高级教师",
+      "subtitle": "从教三十余载"
+    },
+    {
+      "year": "2008",
+      "title": "退休",
+      "subtitle": "仍关心教育事业"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg1",
+      "author": "张晓明",
+      "content": "父亲一生严谨治学，是我们全家的榜样。愿您在另一个世界安息。",
+      "date": "2026-07-20"
+    },
+    {
+      "id": "msg2",
+      "author": "李华",
+      "content": "张老师的语文课让我受益终身，怀念您的教诲。",
+      "date": "2026-07-21"
+    },
+    {
+      "id": "msg3",
+      "author": "王芳",
+      "content": "愿张老师一路走好，您的学生永远记得您。",
+      "date": "2026-07-22"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "merchants": [
+    {
+      "id": "m1",
+      "name": "永安殡仪服务",
+      "city": "上海",
+      "distance": 1.2,
+      "rating": 4.9,
+      "reviewCount": 328,
+      "servedCount": 3200,
+      "responseTime": "24h响应",
+      "tags": ["明码标价", "24h响应", "15年老店"],
+      "imageUrl": null
+    },
+    {
+      "id": "m2",
+      "name": "福寿园礼仪服务",
+      "city": "上海",
+      "distance": 3.5,
+      "rating": 4.8,
+      "reviewCount": 215,
+      "servedCount": 1800,
+      "responseTime": "30min响应",
+      "tags": ["品牌连锁", "一条龙", "好评如潮"],
+      "imageUrl": null
+    },
+    {
+      "id": "m3",
+      "name": "静心堂殡葬服务",
+      "city": "上海",
+      "distance": 5.1,
+      "rating": 4.7,
+      "reviewCount": 156,
+      "servedCount": 900,
+      "responseTime": "1h响应",
+      "tags": ["价格透明", "生态葬", "定制服务"],
+      "imageUrl": null
+    },
+    {
+      "id": "m4",
+      "name": "龙华殡仪服务中心",
+      "city": "上海",
+      "distance": 7.8,
+      "rating": 4.6,
+      "reviewCount": 89,
+      "servedCount": 560,
+      "responseTime": "2h响应",
+      "tags": ["公立医院合作", "白事管家", "安心保障"],
+      "imageUrl": null
+    }
+  ],
+  "packages": {
+    "m1": [
+      {
+        "id": "p1-1",
+        "name": "基础告别套餐",
+        "price": 9800,
+        "badge": null,
+        "items": [
+          "遗体接运（市内）",
+          "冷藏保存3日",
+          "化妆整容",
+          "告别厅1小时（60人）",
+          "骨灰盒（实木）",
+          "司仪主持"
+        ]
+      },
+      {
+        "id": "p1-2",
+        "name": "标准告别套餐",
+        "price": 15800,
+        "badge": "最多人选",
+        "items": [
+          "遗体接运（市内）",
+          "冷藏保存5日",
+          "高级化妆整容",
+          "告别厅2小时（120人）",
+          "花圈20个 + 灵堂布置",
+          "骨灰盒（楠木）",
+          "司仪主持 + 悼词撰写"
+        ]
+      }
+    ],
+    "m2": [
+      {
+        "id": "p2-1",
+        "name": "尊享一条龙服务",
+        "price": 26800,
+        "badge": "热销",
+        "items": [
+          "遗体接运（全市）",
+          "冷藏保存7日",
+          "入殓化妆",
+          "高档告别厅（200人）",
+          "鲜花灵堂布置",
+          "紫檀骨灰盒",
+          "全程白事管家"
+        ]
+      }
+    ]
+  }
+}
