@@ -30,7 +30,9 @@ jobs:
         run: flutter pub get
 
       - name: Regenerate Android project files
-        run: flutter create . --platforms android --project-name guitu_app
+        run: |
+          flutter create . --platforms android --project-name guitu_app
+          rm -f test/widget_test.dart
 
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos
