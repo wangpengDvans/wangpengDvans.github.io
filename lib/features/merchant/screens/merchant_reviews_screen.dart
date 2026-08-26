@@ -8,7 +8,7 @@ class MerchantReviewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reviews = [
+    final reviews = <Map<String, dynamic>>[
       {
         'author': '张先生',
         'rating': '5.0',
