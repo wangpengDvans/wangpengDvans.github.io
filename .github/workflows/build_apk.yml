@@ -29,6 +29,9 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Regenerate Android project files
+        run: flutter create . --platforms android
+
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos
 
