@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0b" />
+  <title>归途 GUITU｜交互原型</title>
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #151518;
+      --surface-light: #202024;
+      --gold: #c9a45c;
+      --gold-light: #e0c078;
+      --text: #f5f4f1;
+      --muted: #a4a1a9;
+      --dim: #717078;
+      --line: rgba(255,255,255,.07);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; margin: 0; }
+    body {
+      background: radial-gradient(circle at 50% -15%, #292119 0, var(--bg) 38%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button { font: inherit; }
+    #app { min-height: 100vh; }
+    .shell { max-width: 460px; min-height: 100vh; margin: 0 auto; position: relative; background: rgba(10,10,11,.9); }
+    .content { padding: 22px 16px 104px; min-height: 100vh; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .eyebrow { color: var(--dim); font-size: 12px; margin-bottom: 4px; }
+    h1 { font-size: 24px; margin: 0; letter-spacing: .2px; }
+    h2 { font-size: 17px; margin: 0; }
+    h3 { font-size: 16px; margin: 0; }
+    .notice { color: var(--gold); font-size: 21px; }
+    .search { display: flex; gap: 10px; align-items: center; padding: 12px 15px; border-radius: 24px; background: var(--surface); color: var(--dim); font-size: 14px; margin-bottom: 16px; }
+    .card { background: var(--surface); border-radius: var(--radius); padding: 16px; margin: 12px 0; border: 1px solid transparent; }
+    .gold-card { border-color: rgba(201,164,92,.26); background: linear-gradient(140deg, rgba(201,164,92,.12), var(--surface) 50%); }
+    .clickable { cursor: pointer; transition: transform .18s ease, border-color .18s ease; }
+    .clickable:active { transform: scale(.985); }
+    .section { display: flex; justify-content: space-between; align-items: center; margin: 25px 0 10px; }
+    .link { color: var(--gold); cursor: pointer; font-size: 13px; }
+    .muted { color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .caption { color: var(--dim); font-size: 12px; line-height: 1.55; }
+    .chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+    .chip { color: var(--gold-light); border: 1px solid rgba(201,164,92,.18); background: rgba(201,164,92,.08); border-radius: 5px; padding: 4px 8px; font-size: 11px; }
+    .progress { height: 6px; border-radius: 99px; overflow: hidden; background: var(--surface-light); margin: 10px 0; }
+    .progress > span { display: block; height: 100%; width: 33%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: inherit; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .category { text-align: center; padding: 16px 10px; min-height: 94px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .category b { font-size: 25px; }
+    .category span { color: var(--muted); font-size: 13px; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .between { justify-content: space-between; }
+    .merchant-icon, .hero-icon { display: grid; place-items: center; background: rgba(201,164,92,.12); color: var(--gold); }
+    .merchant-icon { width: 46px; height: 46px; flex: 0 0 auto; border-radius: 50%; font-size: 21px; }
+    .merchant-info { min-width: 0; flex: 1; }
+    .merchant-name { font-size: 16px; font-weight: 650; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .rating { color: var(--gold); font-size: 13px; margin-top: 5px; }
+    .price { color: var(--gold-light); font-size: 20px; font-weight: 700; margin-top: 12px; }
+    .old-price { color: var(--dim); font-weight: 400; text-decoration: line-through; font-size: 12px; margin-left: 8px; }
+    .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 16px; }
+    .tab, .button { border: 1px solid var(--gold); border-radius: 9px; padding: 11px; background: transparent; color: var(--gold); cursor: pointer; text-align: center; }
+    .tab.active, .button.primary { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #111; border-color: transparent; font-weight: 700; }
+    .button { width: 100%; margin-top: 12px; }
+    .button:active { opacity: .86; }
+    .nav { position: fixed; z-index: 4; bottom: 0; left: 50%; transform: translateX(-50%); width: min(460px, 100%); display: grid; grid-template-columns: repeat(5, 1fr); background: rgba(21,21,24,.96); border-top: 1px solid var(--line); padding: 8px 4px max(9px, env(safe-area-inset-bottom)); backdrop-filter: blur(14px); }
+    .nav-item { border: 0; padding: 4px 1px; background: transparent; color: var(--dim); cursor: pointer; font-size: 11px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .nav-item .icon { font-size: 19px; }
+    .nav-item.active { color: var(--gold); }
+    .guide-step { display: flex; gap: 12px; align-items: flex-start; }
+    .step-dot { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; background: var(--surface-light); color: var(--muted); flex: 0 0 auto; font-weight: 700; }
+    .step-dot.done { background: var(--gold); color: #16120a; }
+    .hero { text-align: center; padding: 26px 16px; }
+    .hero-icon { width: 68px; height: 68px; border-radius: 50%; margin: 0 auto 12px; font-size: 30px; }
+    .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+    .info { background: var(--surface-light); padding: 12px; border-radius: 9px; }
+    .info b { display: block; color: var(--text); margin-top: 5px; font-size: 15px; }
+    .back { color: var(--muted); font-size: 14px; cursor: pointer; display: inline-block; margin-bottom: 12px; }
+    .tribute { padding: 16px; text-align: center; cursor: pointer; }
+    .tribute b { display: block; font-size: 27px; margin-bottom: 6px; }
+    .profile { padding: 18px; }
+    .avatar { display: grid; place-items: center; width: 62px; height: 62px; flex: 0 0 auto; border-radius: 50%; background: linear-gradient(145deg, #393025, #1d1d20); font-size: 28px; }
+    .menu { display: flex; align-items: center; gap: 13px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .menu:last-child { border-bottom: none; }
+    .menu-icon { width: 28px; font-size: 19px; text-align: center; }
+    .grow { flex: 1; }
+    @media (min-width: 600px) { .shell { box-shadow: 0 0 46px rgba(0,0,0,.38); } }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    const merchants = [
+      { id: 'm1', name: '福寿园礼仪服务', rating: '4.9', reviews: '328', distance: '1.2km', tags: ['白事一条龙', '24小时响应'], address: '上海市徐汇区漕溪路 88 号', phone: '400-888-1234', description: '提供从临终关怀、遗体接运、灵堂布置到火化安葬的一站式白事服务，价格透明，服务周到。', services: ['遗体接运', '灵堂布置', '火化服务', '骨灰寄存'] },
+      { id: 'm2', name: '安宁殡仪服务中心', rating: '4.7', reviews: '156', distance: '2.5km', tags: ['公益价', '心理辅导'], address: '上海市静安区南京西路 1200 号', phone: '400-666-5678', description: '专注亲民价位殡仪服务，配备专业哀伤辅导团队，帮助家属平稳度过难关。', services: ['基础殡仪', '告别仪式', '哀伤辅导', '法律咨询'] },
+      { id: 'm3', name: '龙华陵园服务部', rating: '4.8', reviews: '210', distance: '3.8km', tags: ['陵园直营', '墓位优选'], address: '上海市徐汇区龙华西路 180 号', phone: '400-777-9012', description: '龙华陵园官方服务窗口，提供墓位选购、安葬礼仪、后续维护等全流程服务。', services: ['墓位销售', '安葬礼仪', '墓碑维护', '代客祭扫'] }
+    ];
+    const tombs = [
+      { id: 't1', name: '福寿园人文纪念公园', city: '上海', area: '青浦区', type: '艺术墓', status: '在售', price: '118,000', original: '128,000', size: '1.2㎡', orientation: '坐北朝南', features: ['双穴', '花岗岩', '终身维护', '交通便利'] },
+      { id: 't2', name: '滨海古园', city: '上海', area: '奉贤区', type: '生态节地葬', status: '热销', price: '68,000', original: '', size: '0.8㎡', orientation: '坐东朝西', features: ['节地环保', '集体纪念', '海派园林', '价格亲民'] },
+      { id: 't3', name: '清竹园', city: '上海', area: '嘉定区', type: '传统立碑', status: '在售', price: '92,000', original: '98,000', size: '1.0㎡', orientation: '坐北朝南', features: ['双穴', '青砖黛瓦', '江南园林', '近地铁'] }
+    ];
+    const steps = [
+      ['开具死亡证明', '在医院或派出所办理死亡医学证明。', '1-2小时'],
+      ['联系殡仪服务', '预约遗体接运与冷藏，选择基础服务套餐。', '30分钟'],
+      ['布置灵堂', '确定灵堂地点、灵位、遗像与鲜花布置。', '2-4小时'],
+      ['发布讣告', '通知亲友，安排告别仪式时间与流程。', '1小时'],
+      ['举行告别仪式', '按习俗举行追悼会，送别逝者。', '1-2小时'],
+      ['火化与安葬', '办理火化手续，选择骨灰寄存或墓位安葬。', '半天']
+    ];
+    let selectedDiscoverTab = 'merchant';
+    let completedSteps = new Set([0, 1]);
+    let candles = 56;
+    let flowers = 128;
+    const app = document.getElementById('app');
+
+    const chip = (value) => `<span class="chip">${value}</span>`;
+    const nav = (current) => `
+      <nav class="nav">
+        ${[['home','⌂','首页'],['discover','⌕','发现'],['guide','☷','指南'],['memorial','♨','纪念'],['profile','◉','我的']].map(([route,icon,label]) => `<button class="nav-item ${current === route ? 'active' : ''}" onclick="go('${route}')"><span class="icon">${icon}</span>${label}</button>`).join('')}
+      </nav>`;
+    const shell = (current, content) => `<main class="shell"><div class="content">${content}</div>${nav(current)}</main>`;
+    const back = () => `<span class="back" onclick="history.back()">← 返回</span>`;
+
+    function merchantCard(merchant) {
+      return `<article class="card clickable" onclick="go('merchant:${merchant.id}')">
+        <div class="row">
+          <div class="merchant-icon">⚱</div>
+          <div class="merchant-info"><div class="merchant-name">${merchant.name}</div><div class="rating">★ ${merchant.rating}　${merchant.reviews} 条评价</div></div>
+          <span class="caption">${merchant.distance}</span>
+        </div>
+        <div class="chips">${merchant.tags.map(chip).join('')}</div>
+        <div class="caption" style="margin-top:10px">📍 ${merchant.address}</div>
+      </article>`;
+    }
+    function tombCard(tomb) {
+      return `<article class="card gold-card clickable" onclick="go('tomb:${tomb.id}')">
+        <div class="row between"><h3>${tomb.name}</h3><span class="chip">${tomb.status}</span></div>
+        <div class="caption" style="margin-top:6px">${tomb.city} · ${tomb.area} · ${tomb.type}</div>
+        <div class="chips">${tomb.features.map(chip).join('')}</div>
+        <div class="price">¥${tomb.price}${tomb.original ? `<span class="old-price">¥${tomb.original}</span>` : ''}</div>
+      </article>`;
+    }
+
+    function home() {
+      const done = completedSteps.size;
+      return shell('home', `
+        <header class="topbar"><div><div class="eyebrow">当前定位</div><h1>上海　⌄</h1></div><div class="notice">♧</div></header>
+        <div class="search">⌕　搜索殡葬服务 / 墓地 / 商户</div>
+        <section class="card gold-card clickable" onclick="go('guide')"><div class="row between"><h2>治丧指南</h2><span class="caption">${done}/6 步</span></div><div class="progress"><span style="width:${done / 6 * 100}%"></span></div><p class="muted">点击跟随步骤完成治丧全流程，当前已完成 ${done} 步。</p></section>
+        <div class="section"><h2>服务分类</h2></div>
+        <div class="grid">${['⚱ 殡仪服务','🏔 墓位陵园','◈ 寿衣用品','🚐 灵车接运','⌘ 法事超度','◌ 殡葬顾问'].map(item => { const [icon,...text] = item.split(' '); return `<div class="card category clickable" onclick="go('discover')"><b>${icon}</b><span>${text.join(' ')}</span></div>`; }).join('')}</div>
+        <div class="section"><h2>附近优质商户</h2><span class="link" onclick="go('discover')">查看更多</span></div>
+        ${merchants.slice(0,2).map(merchantCard).join('')}
+        <div class="section"><h2>热选墓位</h2><span class="link" onclick="go('discover')">查看更多</span></div>
+        ${tombCard(tombs[0])}
+      `);
+    }
+    function discover() {
+      const data = selectedDiscoverTab === 'merchant' ? merchants.map(merchantCard).join('') : tombs.map(tombCard).join('');
+      return shell('discover', `
+        <header class="topbar"><h1>发现</h1></header>
+        <div class="search">⌕　搜索商户 / 墓位 / 陵园</div>
+        <div class="tabs"><button class="tab ${selectedDiscoverTab === 'merchant' ? 'active' : ''}" onclick="setDiscover('merchant')">殡仪商户</button><button class="tab ${selectedDiscoverTab === 'tomb' ? 'active' : ''}" onclick="setDiscover('tomb')">墓位陵园</button></div>
+        ${data}
+      `);
+    }
+    function guide() {
+      const done = completedSteps.size;
+      return shell('guide', `
+        <header class="topbar"><div><h1>治丧指南</h1><div class="caption" style="margin-top:6px">按步骤完成治丧流程，遇到困难可随时咨询平台顾问</div></div></header>
+        <section class="card gold-card"><div class="row between"><h3>完成进度</h3><span class="gold-text">${done}/6</span></div><div class="progress"><span style="width:${done/6*100}%"></span></div></section>
+        ${steps.map((step, index) => `<article class="card clickable" onclick="toggleStep(${index})"><div class="guide-step"><div class="step-dot ${completedSteps.has(index) ? 'done' : ''}">${completedSteps.has(index) ? '✓' : index + 1}</div><div><h3>${step[0]}</h3><p class="muted" style="margin:5px 0 7px">${step[1]}</p><span class="caption">预计耗时：${step[2]}</span></div></div></article>`).join('')}
+        <button class="button primary" onclick="toast('平台顾问将在 10 分钟内与你联系')">预约平台顾问协助</button>
+      `);
+    }
+    function memorial() {
+      return shell('memorial', `
+        <section class="card hero gold-card"><div class="hero-icon">🕯</div><h1>王明德</h1><div class="caption" style="margin-top:6px">1948.03 - 2024.07</div><p class="muted" style="font-style:italic">“一生正直，慈爱长存”</p></section>
+        <section class="card"><div class="section" style="margin-top:0"><h2>云端祭奠</h2></div><div class="grid"><div class="card tribute gold-card" onclick="addCandle()"><b>🕯</b><h3>点燃蜡烛</h3><span class="caption">${candles} 人祭奠</span></div><div class="card tribute gold-card" onclick="addFlower()"><b>🌸</b><h3>敬献鲜花</h3><span class="caption">${flowers} 人献花</span></div></div></section>
+        <section class="card"><div class="section" style="margin-top:0"><h2>追思留言</h2></div>${['愿您在天堂安好。','永远怀念您的笑容与慈爱。','清明时节，思念绵长。'].map((text,index) => `<div class="menu"><div class="merchant-icon">◉</div><div><h3>亲友 ${index+1}</h3><div class="muted">${text}</div></div></div>`).join('')}</section>
+        <button class="button" onclick="toast('留言功能为原型演示')">写一段留言</button>
+      `);
+    }
+    function profile() {
+      const menu = [['▣','我的订单','查看服务与商品订单'],['☷','治丧计划','管理当前治丧进度'],['♜','商户入驻','申请成为平台合作商户'],['⚙','设置','账号、通知、隐私']];
+      return shell('profile', `
+        <section class="card gold-card profile"><div class="row"><div class="avatar">◉</div><div><h2>张先生</h2><div class="caption" style="margin-top:5px">138****1234</div></div></div></section>
+        <section class="card">${menu.map(item => `<div class="menu clickable" onclick="toast('${item[1]}功能为原型演示')"><div class="menu-icon">${item[0]}</div><div class="grow"><h3>${item[1]}</h3><div class="caption" style="margin-top:4px">${item[2]}</div></div><span class="caption">›</span></div>`).join('')}</section>
+        <section class="card"><h2>平台承诺</h2><p class="muted">价格透明 · 资质审核 · 7×24小时顾问 · 定金托管</p></section>
+      `);
+    }
+    function merchantDetail(id) {
+      const item = merchants.find(value => value.id === id);
+      if (!item) return home();
+      return shell('', `
+        ${back()}<section class="card hero gold-card"><div class="hero-icon">⚱</div><h1>${item.name}</h1><div class="chips" style="justify-content:center">${chip('★ ' + item.rating)}${chip(item.reviews + ' 条评价')}${item.tags.map(chip).join('')}</div></section>
+        <section class="card"><h2>商户简介</h2><p class="muted">${item.description}</p></section>
+        <section class="card"><h2>联系方式</h2><div class="menu"><span>📍</span><span class="muted">${item.address}</span></div><div class="menu"><span>☎</span><span class="muted">${item.phone}</span></div></section>
+        <section class="card"><h2>服务项目</h2><div class="chips">${item.services.map(chip).join('')}</div></section>
+        <button class="button primary" onclick="toast('预约请求已提交')">预约咨询</button>
+      `);
+    }
+    function tombDetail(id) {
+      const item = tombs.find(value => value.id === id);
+      if (!item) return home();
+      return shell('', `
+        ${back()}<section class="card hero gold-card"><div class="hero-icon">🏔</div><h1>${item.name}</h1><div class="caption" style="margin-top:6px">${item.city} · ${item.area} · ${item.type}</div><div class="price">¥${item.price}${item.original ? `<span class="old-price">¥${item.original}</span>` : ''}</div><div class="chips" style="justify-content:center">${chip(item.status)}</div></section>
+        <section class="card"><h2>墓位信息</h2><div class="info-grid"><div class="info"><span class="caption">面积</span><b>${item.size}</b></div><div class="info"><span class="caption">朝向</span><b>${item.orientation}</b></div><div class="info"><span class="caption">类型</span><b>${item.type}</b></div><div class="info"><span class="caption">状态</span><b>${item.status}</b></div></div></section>
+        <section class="card"><h2>墓位特色</h2><div class="chips">${item.features.map(chip).join('')}</div></section>
+        <button class="button primary" onclick="toast('看墓预约已提交')">预约看墓</button>
+      `);
+    }
+    function render() {
+      const route = (location.hash || '#home').slice(1);
+      const views = { home, discover, guide, memorial, profile };
+      const view = route.startsWith('merchant:') ? merchantDetail(route.split(':')[1]) : route.startsWith('tomb:') ? tombDetail(route.split(':')[1]) : (views[route] || home)();
+      app.innerHTML = view;
+    }
+    function go(route) { location.hash = route; }
+    function setDiscover(tab) { selectedDiscoverTab = tab; render(); }
+    function toggleStep(index) { completedSteps.has(index) ? completedSteps.delete(index) : completedSteps.add(index); render(); }
+    function addCandle() { candles += 1; render(); }
+    function addFlower() { flowers += 1; render(); }
+    function toast(message) { alert(message); }
+    window.addEventListener('hashchange', render);
+    render();
+  </script>
+</body>
+</html>
